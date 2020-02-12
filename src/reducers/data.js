@@ -1,5 +1,5 @@
-// import { FETCH_TODOS } from "../actions/types";
-const FETCH_TODOS = "FETCH_TODOS";
+import { FETCH_TODOS } from "../actions/types";
+
 export default (state = {}, action) => {
   switch (action.type) {
     case FETCH_TODOS:

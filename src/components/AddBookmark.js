@@ -1,16 +1,12 @@
-import React from "react";
-import Avatar from "@material-ui/core/Avatar";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { addBookmark } from "../actions";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -19,12 +15,9 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     alignItems: "center"
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
+
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1)
   },
   submit: {
@@ -32,8 +25,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn() {
+export default function AddBookmark() {
+  const [title, setTitle] = useState("");
+  const [url, setUrl] = useState("");
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  const formSubmit = event => {
+    event.preventDefault();
+    dispatch(addBookmark({ title, url }));
+    setTitle("");
+    setUrl("");
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -42,17 +45,19 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Add Your Bookmark Here
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={formSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="title"
+            value={title}
             label="Title"
             name="title"
             autoComplete="off"
             autoFocus
+            onChange={e => setTitle(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -63,6 +68,9 @@ export default function SignIn() {
             label="Url"
             type="url"
             id="url"
+            value={url}
+            autoComplete="off"
+            onChange={e => setUrl(e.target.value)}
           />
           <Button
             type="submit"

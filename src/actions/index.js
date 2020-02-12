@@ -1,16 +1,13 @@
-import { todosRef } from "../firebase";
 import { FETCH_TODOS } from "./types";
+import { bookmarksRef } from "../firebase";
 
-export const addToDo = newToDo => async dispatch => {
-  todosRef.push().set(newToDo);
+export const addBookmark = newToDo => async () => {
+  // todosRef.push().set(newToDo);
+  bookmarksRef.push().set(newToDo);
 };
 
-export const completeToDo = completeToDoId => async dispatch => {
-  todosRef.child(completeToDoId).remove();
-};
-
-export const fetchToDos = () => async dispatch => {
-  todosRef.on("value", snapshot => {
+export const fetchBookmarks = () => async dispatch => {
+  bookmarksRef.on("value", snapshot => {
     dispatch({
       type: FETCH_TODOS,
       payload: snapshot.val()

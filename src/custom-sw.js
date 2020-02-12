@@ -11,7 +11,8 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest);
 // app-shell
 workbox.routing.registerRoute(
   new RegExp("https:.*min.(css|js)"),
-  workbox.strategies.staleWhileRevalidate({
-    cacheName: "cache"
-  })
+  // workbox.strategies.staleWhileRevalidate({
+  //   cacheName: "cache"
+  // })
+  new workbox.strategies.StaleWhileRevalidate({ cacheName: "cache" })
 );
