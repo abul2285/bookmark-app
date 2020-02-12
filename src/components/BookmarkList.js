@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { FaPlus, FaMinus } from "react-icons/fa";
 import _ from "lodash";
-import { Button, Grid } from "@material-ui/core";
 import * as actions from "../actions";
 import ListItems from "./BookmarkListItem";
 import AddBookmark from "./AddBookmark";
@@ -26,50 +24,35 @@ class List extends Component {
     this.setState({ title: "", url: "" });
   };
 
-  renderForm = () => {
-    const { showForm } = this.state;
-    if (showForm) {
-      return <AddBookmark show={showForm} />;
-    }
-  };
+  // renderForm = () => {
+  //   const { showForm } = this.state;
+  //   if (showForm) {
+  //     return <AddBookmark show={showForm} />;
+  //   }
+  // };
+  renderForm = () => <AddBookmark />;
+
   renderToDo() {
     const { data } = this.props;
     const toDos = _.map(data, (value, key) => {
-      console.log("data", data);
-      console.log("value", value);
       return <ListItems key={key} todoId={key} todo={value} />;
     });
     if (!_.isEmpty(toDos)) {
       return toDos;
     }
-    return <h4>You have no more things ToDo!</h4>;
+    return <h4 style={{ textAlign: "center" }}>Loading Bookmark......</h4>;
   }
   componentWillMount() {
     this.props.fetchBookmarks();
   }
   render() {
-    const { showForm } = this.state;
     return (
       <>
-        <Grid container justify="center">
-          <Grid item xs={4}>
-            <Button
-              onClick={() => this.setState({ showForm: !showForm })}
-              fullWidth
-              style={{ margin: "20px" }}
-              variant="contained"
-              color="white"
-            >
-              {showForm ? (
-                <FaMinus size="25" color="red" />
-              ) : (
-                <FaPlus size="25" color="green" />
-              )}
-            </Button>
-          </Grid>
-        </Grid>
         <div>{this.renderForm()}</div>
-        <div>{this.renderToDo()}</div>
+        <div style={{ textAlign: "center", marginTop: "3em" }}>
+          <h2>BookMark List</h2>
+          {this.renderToDo()}
+        </div>
       </>
     );
   }

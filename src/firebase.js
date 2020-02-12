@@ -1,4 +1,6 @@
-import * as firebase from "firebase";
+// import * as firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/database";
 const config = {
   apiKey: "AIzaSyBc8jvdTU-s1GwdPW9nrc5UvW5va3OVWSE",
   authDomain: "react-pwa-c2c58.firebaseapp.com",

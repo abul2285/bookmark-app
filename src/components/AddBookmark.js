@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { FaPlus } from "react-icons/fa";
+import { Button, Grid } from "@material-ui/core";
 import { addBookmark } from "../actions";
 import { useDispatch } from "react-redux";
 
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 export default function AddBookmark() {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
+  const [showForm, setShowForm] = useState(false);
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -36,8 +38,27 @@ export default function AddBookmark() {
     dispatch(addBookmark({ title, url }));
     setTitle("");
     setUrl("");
+    setShowForm(false);
   };
-
+  if (!showForm) {
+    // return <h3 onClick={() => setShowForm(true)}>hello</h3>;
+    return (
+      <Grid container justify="center">
+        <Grid item xs={4}>
+          <Button
+            onClick={() => setShowForm(true)}
+            fullWidth
+            style={{ margin: "20px" }}
+            variant="contained"
+            // color="white"
+          >
+            <FaPlus size="25" color="green" style={{ marginRight: "20px" }} />{" "}
+            Add New Bookmark
+          </Button>
+        </Grid>
+      </Grid>
+    );
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
