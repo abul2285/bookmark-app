@@ -6,7 +6,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { FaPlus } from "react-icons/fa";
 import { Button, Grid } from "@material-ui/core";
-import { addBookmark } from "../actions";
+import {
+  // addBookmarkWithThunk,
+  addBookmarkWithSaga,
+  fetchBookmarksWithSaga
+} from "../redux/actions";
+
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
@@ -35,13 +40,14 @@ export default function AddBookmark() {
 
   const formSubmit = event => {
     event.preventDefault();
-    dispatch(addBookmark({ title, url }));
+    // dispatch(addBookmarkWithThunk({ title, url }));
+    dispatch(addBookmarkWithSaga({ title, url }));
+    dispatch(fetchBookmarksWithSaga());
     setTitle("");
     setUrl("");
     setShowForm(false);
   };
   if (!showForm) {
-    // return <h3 onClick={() => setShowForm(true)}>hello</h3>;
     return (
       <Grid container justify="center">
         <Grid item xs={4}>
@@ -50,7 +56,6 @@ export default function AddBookmark() {
             fullWidth
             style={{ margin: "20px" }}
             variant="contained"
-            // color="white"
           >
             <FaPlus size="25" color="green" style={{ marginRight: "20px" }} />{" "}
             Add New Bookmark
