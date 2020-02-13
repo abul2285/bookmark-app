@@ -26,3 +26,5 @@ export const fetchBookmarksWithSaga = () => {
     type: FETCH_BOOKMARKS
   };
 };
+export * from "./users";
+export * from "./bookmarks";

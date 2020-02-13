@@ -1,6 +1,7 @@
 // import * as firebase from "firebase";
 import firebase from "firebase/app";
 import "firebase/database";
+import "firebase/auth";
 import ReduxSagaFirebase from "redux-saga-firebase";
 const config = {
   apiKey: "AIzaSyBc8jvdTU-s1GwdPW9nrc5UvW5va3OVWSE",
