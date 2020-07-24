@@ -8,12 +8,12 @@ import AddBookmark from "./AddBookmark";
 class List extends Component {
   renderForm = () => <AddBookmark />;
 
-  renderToDo() {
+  renderBookmark() {
     const {
-      data: { bookmarks }
+      data: { bookmarks },
     } = this.props;
     const toDos = _.map(bookmarks, (value, key) => {
-      return <ListItems key={key} todoId={key} todo={value} />;
+      return <ListItems key={key} bookmarkId={key} bookmark={value} />;
     });
     if (!_.isEmpty(toDos)) {
       return toDos;
@@ -30,7 +30,7 @@ class List extends Component {
         <div>{this.renderForm()}</div>
         <div style={{ textAlign: "center", marginTop: "3em" }}>
           <h2>BookMark List</h2>
-          {this.renderToDo()}
+          {this.renderBookmark()}
         </div>
       </>
     );
@@ -39,7 +39,7 @@ class List extends Component {
 
 const mapStateToProps = ({ data }) => {
   return {
-    data
+    data,
   };
 };
 

@@ -1,29 +1,31 @@
 import { bookmarksRef } from "../../firebase";
-import { FETCH_BOOKMARKS, ADD_BOOKMARKS } from "../actionTypes";
+import {
+  FETCH_BOOKMARKS,
+  ADD_BOOKMARKS,
+  DELETE_BOOKMARKS,
+} from "../actionTypes";
 
-export const addBookmarkWithThunk = newBookmark => async () => {
+export const addBookmarkWithThunk = (newBookmark) => async () => {
   bookmarksRef.push().set(newBookmark);
 };
 
-export const addBookmarkWithSaga = payload => {
+export const addBookmarkWithSaga = (payload) => {
   return {
     type: ADD_BOOKMARKS,
-    payload
+    payload,
   };
 };
 
-// export const fetchBookmarksWithThunk = () => async dispatch => {
-//   bookmarksRef.on("value", snapshot => {
-//     dispatch({
-//       type: FETCH_BOOKMARKS,
-//       payload: snapshot.val()
-//     });
-//   });
-// };
+export const deleteBookmarkWithSaga = (id) => {
+  return {
+    type: DELETE_BOOKMARKS,
+    id,
+  };
+};
 
 export const fetchBookmarksWithSaga = () => {
   return {
-    type: FETCH_BOOKMARKS
+    type: FETCH_BOOKMARKS,
   };
 };
 export * from "./users";

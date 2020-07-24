@@ -1,23 +1,30 @@
 import { rsf } from "../../firebase";
 import { takeLatest, call, put } from "redux-saga/effects";
-import { FETCH_BOOKMARKS, ADD_BOOKMARKS } from "../actionTypes";
+import {
+  FETCH_BOOKMARKS,
+  ADD_BOOKMARKS,
+  DELETE_BOOKMARKS,
+} from "../actionTypes";
 import {
   requestBookmark,
   requestBookmarkError,
-  requestBookmarkSuccess
+  requestBookmarkSuccess,
 } from "../actions/bookmarks";
 
-function* addBookmark({ payload: { title, url } }) {
+function* addBookmarkAsync({ payload: { title, url } }) {
   const key = yield call(rsf.database.create, "bookmarks", {
     title,
-    url
+    url,
   });
   // `key` is something like "-Kfn7EyLEoHax0YGoQr0"
 }
 
+function* deleteBookmarkAsync({ id }) {
+  yield call(rsf.database.delete, `bookmarks/${id}`);
+}
+
 function* fetchBookmarkAsync() {
   try {
-    console.log("saga");
     yield put(requestBookmark());
     const Bookmarks = yield call(rsf.database.read, "bookmarks");
     yield put(requestBookmarkSuccess(Bookmarks));
@@ -27,6 +34,7 @@ function* fetchBookmarkAsync() {
 }
 
 export default [
-  takeLatest(ADD_BOOKMARKS, addBookmark),
-  takeLatest(FETCH_BOOKMARKS, fetchBookmarkAsync)
+  takeLatest(ADD_BOOKMARKS, addBookmarkAsync),
+  takeLatest(DELETE_BOOKMARKS, deleteBookmarkAsync),
+  takeLatest(FETCH_BOOKMARKS, fetchBookmarkAsync),
 ];

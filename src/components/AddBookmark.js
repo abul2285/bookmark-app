@@ -6,29 +6,25 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { FaPlus } from "react-icons/fa";
 import { Button, Grid } from "@material-ui/core";
-import {
-  // addBookmarkWithThunk,
-  addBookmarkWithSaga,
-  fetchBookmarksWithSaga
-} from "../redux/actions";
+import { addBookmarkWithSaga, fetchBookmarksWithSaga } from "../redux/actions";
 
 import { useDispatch } from "react-redux";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   form: {
     width: "100%",
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 export default function AddBookmark() {
@@ -38,14 +34,20 @@ export default function AddBookmark() {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const formSubmit = event => {
+  const formSubmit = (event) => {
     event.preventDefault();
-    // dispatch(addBookmarkWithThunk({ title, url }));
-    dispatch(addBookmarkWithSaga({ title, url }));
-    dispatch(fetchBookmarksWithSaga());
-    setTitle("");
-    setUrl("");
-    setShowForm(false);
+
+    let accessCode = prompt("Enter your access code", "1234");
+
+    if (accessCode === 2285) {
+      dispatch(addBookmarkWithSaga({ title, url }));
+      dispatch(fetchBookmarksWithSaga());
+      setTitle("");
+      setUrl("");
+      setShowForm(false);
+    } else {
+      console.log("you have no access");
+    }
   };
   if (!showForm) {
     return (
@@ -83,7 +85,7 @@ export default function AddBookmark() {
             name="title"
             autoComplete="off"
             autoFocus
-            onChange={e => setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -96,7 +98,7 @@ export default function AddBookmark() {
             id="url"
             value={url}
             autoComplete="off"
-            onChange={e => setUrl(e.target.value)}
+            onChange={(e) => setUrl(e.target.value)}
           />
           <Button
             type="submit"
