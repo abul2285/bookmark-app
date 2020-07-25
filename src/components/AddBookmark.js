@@ -40,9 +40,9 @@ export default function AddBookmark() {
   const formSubmit = (event) => {
     event.preventDefault();
 
-    let accessCode = prompt("Enter your access code", "1234");
+    let accessCode = prompt("Enter your access code", "add access code");
 
-    if (accessCode == 2285) {
+    if (accessCode == "abul3121999") {
       dispatch(addBookmarkWithSaga({ title, url }));
       dispatch(fetchBookmarksWithSaga());
       setTitle("");

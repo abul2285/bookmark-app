@@ -12,9 +12,9 @@ function ListItems({ bookmark, bookmarkId }) {
   const [showDelet, setShowDelete] = useState(false);
 
   const handleDelete = (id) => {
-    let accessCode = prompt("Enter your access code", "1234");
+    let accessCode = prompt("Enter your access code", "delete access code");
 
-    if (accessCode == 3121999) {
+    if (accessCode == "abul2285") {
       dispatch(deleteBookmarkWithSaga(id));
       dispatch(fetchBookmarksWithSaga());
     } else {
