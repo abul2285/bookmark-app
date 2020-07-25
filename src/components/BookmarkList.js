@@ -4,24 +4,24 @@ import _ from "lodash";
 import * as actions from "../redux/actions";
 import ListItems from "./BookmarkListItem";
 import AddBookmark from "./AddBookmark";
+import { Container } from "@material-ui/core";
 
-class List extends Component {
+class BookMarkList extends Component {
   renderForm = () => <AddBookmark />;
 
   renderBookmark() {
     const {
       data: { bookmarks },
     } = this.props;
-    const toDos = _.map(bookmarks, (value, key) => {
+    const bookmarkslist = _.map(bookmarks, (value, key) => {
       return <ListItems key={key} bookmarkId={key} bookmark={value} />;
     });
-    if (!_.isEmpty(toDos)) {
-      return toDos;
+    if (!_.isEmpty(bookmarkslist)) {
+      return bookmarkslist;
     }
-    return <h4 style={{ textAlign: "center" }}>Loading Bookmark......</h4>;
+    return <h4 style={{ textAlign: "center" }}>Loading Bookmarks...</h4>;
   }
   componentWillMount() {
-    // this.props.fetchBookmarksWithThunk();
     this.props.fetchBookmarksWithSaga();
   }
   render() {
@@ -43,4 +43,4 @@ const mapStateToProps = ({ data }) => {
   };
 };
 
-export default connect(mapStateToProps, actions)(List);
+export default connect(mapStateToProps, actions)(BookMarkList);

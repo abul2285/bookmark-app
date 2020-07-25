@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { FaPlus } from "react-icons/fa";
-import { Button, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { addBookmarkWithSaga, fetchBookmarksWithSaga } from "../redux/actions";
+import Field from "./Field";
+import Label from "./Label";
+import Input from "./Input";
+import Button from "./Button";
 
 import { useDispatch } from "react-redux";
 
@@ -39,7 +42,7 @@ export default function AddBookmark() {
 
     let accessCode = prompt("Enter your access code", "1234");
 
-    if (accessCode === 2285) {
+    if (accessCode == 2285) {
       dispatch(addBookmarkWithSaga({ title, url }));
       dispatch(fetchBookmarksWithSaga());
       setTitle("");
@@ -51,61 +54,57 @@ export default function AddBookmark() {
   };
   if (!showForm) {
     return (
-      <Grid container justify="center">
-        <Grid item xs={4}>
+      <Container component="main" maxWidth="sm">
+        <Grid item xs={12}>
           <Button
             onClick={() => setShowForm(true)}
             fullWidth
             style={{ margin: "20px" }}
-            variant="contained"
+            type="primary-alt"
           >
-            <FaPlus size="25" color="green" style={{ marginRight: "20px" }} />{" "}
+            <FaPlus size="15" color="green" style={{ marginRight: "10px" }} />{" "}
             Add New Bookmark
           </Button>
         </Grid>
-      </Grid>
+      </Container>
     );
   }
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Add Your Bookmark Here
         </Typography>
         <form className={classes.form} onSubmit={formSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="title"
-            value={title}
-            label="Title"
-            name="title"
-            autoComplete="off"
-            autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="url"
-            label="Url"
-            type="url"
-            id="url"
-            value={url}
-            autoComplete="off"
-            onChange={(e) => setUrl(e.target.value)}
-          />
+          <Field>
+            <Label>Title</Label>
+            <Input
+              type="text"
+              name="title"
+              value={title}
+              placeholder="Enter Your Title"
+              autoFocus
+              autoComplete="off"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Field>
+          <Field>
+            <Label>URL</Label>
+            <Input
+              type="url"
+              name="URL"
+              placeholder="Enter Your URL"
+              value={url}
+              autoComplete="off"
+              onChange={(e) => setUrl(e.target.value)}
+            />
+          </Field>
           <Button
-            type="submit"
             fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
+            htmlType="submit"
+            className="classes.submit"
+            type="primary"
           >
             Add Bookmark
           </Button>

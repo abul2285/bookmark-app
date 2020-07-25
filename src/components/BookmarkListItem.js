@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaLink, FaTimes } from "react-icons/fa";
-import { ListItem, ListItemText, Grid } from "@material-ui/core";
+import { ListItem, ListItemText, Grid, Container } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import {
   deleteBookmarkWithSaga,
@@ -9,35 +9,49 @@ import {
 
 function ListItems({ bookmark, bookmarkId }) {
   const dispatch = useDispatch();
+  const [showDelet, setShowDelete] = useState(false);
 
   const handleDelete = (id) => {
     let accessCode = prompt("Enter your access code", "1234");
 
-    if (accessCode === 2285) {
+    if (accessCode == 2285) {
       dispatch(deleteBookmarkWithSaga(id));
       dispatch(fetchBookmarksWithSaga());
     } else {
       console.log("you have no access");
     }
   };
+  let title;
+  if (bookmark.title.length > 60) {
+    title = `${bookmark.title.substring(0, 60)}...`;
+  } else {
+    title = bookmark.title;
+  }
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={8}>
-        <ListItem button>
-          <FaLink color="green" size="25" style={{ margin: "20px" }} />
+    <Container component="main" maxWidth="md">
+      <Grid item xs={12}>
+        <ListItem
+          button
+          onMouseEnter={() => setShowDelete(true)}
+          onMouseLeave={() => setShowDelete(false)}
+        >
+          <FaLink color="green" size="20" style={{ margin: "15px" }} />
           <a href={bookmark.url} target="_blank" rel="noopener noreferrer">
-            <ListItemText primary={bookmark.title} />
+            <ListItemText primary={title} />
           </a>
           <FaTimes
             color="red"
             size="20"
             onClick={() => handleDelete(bookmarkId)}
-            style={{ marginLeft: "auto" }}
+            style={{
+              marginLeft: "auto",
+              opacity: showDelet ? 1 : 0,
+            }}
           />
         </ListItem>
       </Grid>
-    </Grid>
+    </Container>
   );
 }
 
